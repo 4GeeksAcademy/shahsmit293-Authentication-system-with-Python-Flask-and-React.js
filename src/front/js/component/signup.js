@@ -1,21 +1,43 @@
-import React, { useContext, useState } from "react";
-import "../../styles/home.css";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext";
 
-export const Home = () => {
-  const { store, actions } = useContext(Context);
+export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const onSubmit = (event) => {
+
+  const onCreate = (event) => {
     event.preventDefault();
-    actions.login(email, password);
-    navigate("/prevented");
+    fetch(
+      "https://3001-4geeksacade-shahsmit293-a40hewwdjbf.ws-us105.gitpod.io/api/signup",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((resp) => {
+        console.log(resp.ok);
+        console.log(resp.status);
+        console.log(resp.text());
+        return resp.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    navigate("/");
   };
   return (
     <div className="text-center mt-5">
-      <h1>LOG IN PAGE</h1>
+      <h1>Create your account here</h1>
       <form>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
@@ -57,8 +79,8 @@ export const Home = () => {
             Check me out
           </label>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={onSubmit}>
-          Submit
+        <button type="submit" className="btn btn-primary" onClick={onCreate}>
+          Create
         </button>
       </form>
     </div>
