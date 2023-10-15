@@ -2,8 +2,9 @@ import React, { useContext, useState } from "react";
 import "../../styles/home.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
-export const Home = () => {
+export const Home = (event) => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,6 +61,11 @@ export const Home = () => {
         <button type="submit" className="btn btn-primary" onClick={onSubmit}>
           Submit
         </button>
+        <div>
+          <Link to="/sign-up" relative="path">
+            If not a member then click here for sign up
+          </Link>
+        </div>
       </form>
     </div>
   );
